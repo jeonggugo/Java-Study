@@ -1,0 +1,84 @@
+# Java `final` 키워드 정리
+
+## 1. `final` 변수와 상수 1
+
+### 1.1 `final` - 지역 변수
+- `final`이 붙은 지역 변수는 **최초 1회만 할당 가능**.
+- 선언과 동시에 초기화하거나, 선언 후 최초 한 번만 값 할당 가능.
+- 메서드 매개변수에 `final`을 붙이면 메서드 내부에서 값 변경 불가.
+
+```java
+final int data1;
+data1 = 10; // 최초 1회 할당 OK
+// data1 = 20; // 컴파일 오류
+
+static void method(final int parameter) {
+    // parameter = 20; // 컴파일 오류
+}
+```
+
+### 1.2 `final` - 필드(멤버 변수)
+- **생성자 초기화**: `final` 필드는 생성자를 통해 1회 초기화 가능.
+- **필드 초기화**: 선언 시 바로 초기화하면 이후 변경 불가.
+- `static final` → 클래스 단위로 단 하나만 존재하며, 값 변경 불가.
+
+```java
+final int value; // 생성자 초기화
+static final int CONST_VALUE = 10; // 상수
+```
+
+---
+
+## 2. `final` 변수와 상수 2
+
+### 2.1 상수(Constant)
+- 변하지 않는 고정값.
+- **`static final`** 키워드 사용.
+- 네이밍: **대문자 + 언더스코어(_)**.
+
+```java
+public static final double PI = 3.14;
+public static final int MAX_USERS = 1000;
+```
+
+### 2.2 상수 사용 장점
+- 매직 넘버 제거 → 의미 있는 이름 제공.
+- 값 변경 시 **중앙 관리** 가능.
+- 런타임에 변경 불가, 변경하려면 코드 수정 후 재컴파일 필요.
+
+---
+
+## 3. `final` 변수와 참조
+
+### 3.1 기본형 vs 참조형
+- **기본형**: 값 자체를 변경 불가.
+- **참조형**: 참조값 변경 불가 (다른 객체를 가리킬 수 없음).
+- 단, 참조 대상의 **내부 값**은 변경 가능.
+
+```java
+final Data data = new Data();
+// data = new Data(); // 참조 변경 불가
+data.value = 10; // 객체 내부 값 변경 가능
+```
+
+---
+
+## 4. 정리
+- 변경 불가 보장을 위해 `final` 사용.
+- 예: 고객 `id`와 같이 변경되면 안 되는 값은 `final`로 선언.
+- 컴파일 시 변경 시도를 오류로 잡아줌.
+
+```java
+private final String id;
+public Member(String id, String name) {
+    this.id = id; // 생성자 초기화
+}
+```
+
+---
+
+## 핵심 요약
+- **지역 변수**: 최초 1회 할당.
+- **필드 변수**: 생성자 초기화 또는 필드 초기화.
+- **상수**: `static final` 사용, 네이밍 규칙 준수.
+- **참조형**: 참조 변경 불가, 내부 값 변경 가능.
